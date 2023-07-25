@@ -1,21 +1,19 @@
-import * as React from 'react'
+import { Loading } from './Loading'
+import { Page404 } from './Page404'
+import * as config from '@/lib/config'
+import { mapImageUrl } from '@/lib/map-image-url'
+import { mapPageUrl } from '@/lib/map-page-url'
+import * as types from '@/lib/types'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
 import { formatDate } from 'notion-utils'
+import { useTheme } from 'providers/ui.provider'
+import * as React from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import TweetEmbed from 'react-tweet-embed'
 import { useSearchParam } from 'react-use'
-
-import * as config from '@/lib/config'
-import * as types from '@/lib/types'
-import { mapImageUrl } from '@/lib/map-image-url'
-import { mapPageUrl } from '@/lib/map-page-url'
-
-import { Loading } from './Loading'
-import { Page404 } from './Page404'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -55,25 +53,25 @@ const Code = dynamic(() =>
       import('prismjs/components/prism-stylus.js'),
       import('prismjs/components/prism-swift.js'),
       import('prismjs/components/prism-wasm.js'),
-      import('prismjs/components/prism-yaml.js')
+      import('prismjs/components/prism-yaml.js'),
     ])
     return m.Code
-  })
+  }),
 )
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then(
-    (m) => m.Collection
-  )
+    (m) => m.Collection,
+  ),
 )
 const Equation = dynamic(() =>
-  import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation),
 )
 const Pdf = dynamic(
   () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
   {
-    ssr: false
-  }
+    ssr: false,
+  },
 )
 const Modal = dynamic(
   () =>
@@ -82,8 +80,8 @@ const Modal = dynamic(
       return m.Modal
     }),
   {
-    ssr: false
-  }
+    ssr: false,
+  },
 )
 
 const Tweet = ({ id }: { id: string }) => {
@@ -92,27 +90,26 @@ const Tweet = ({ id }: { id: string }) => {
 
 const propertyLastEditedTimeValue = (
   { block, pageHeader },
-  defaultFn: () => React.ReactNode
+  defaultFn: () => React.ReactNode,
 ) => {
   if (pageHeader && block?.last_edited_time) {
     return `Last updated ${formatDate(block?.last_edited_time, {
-      month: 'long'
+      month: 'long',
     })}`
   }
-
   return defaultFn()
 }
 
 const propertyDateValue = (
   { data, schema, pageHeader },
-  defaultFn: () => React.ReactNode
+  defaultFn: () => React.ReactNode,
 ) => {
   if (pageHeader && schema?.name?.toLowerCase() === 'published') {
     const publishDate = data?.[0]?.[1]?.[0]?.[1]?.start_date
 
     if (publishDate) {
       return `${formatDate(publishDate, {
-        month: 'long'
+        month: 'long',
       })}`
     }
   }
@@ -122,7 +119,7 @@ const propertyDateValue = (
 
 const propertyTextValue = (
   { schema, pageHeader },
-  defaultFn: () => React.ReactNode
+  defaultFn: () => React.ReactNode,
 ) => {
   if (pageHeader && schema?.name?.toLowerCase() === 'author') {
     return <b>{defaultFn()}</b>
@@ -135,10 +132,11 @@ export const NotionPage: React.FC<types.PageProps> = ({
   site,
   recordMap,
   error,
-  pageId
+  pageId,
 }) => {
   const router = useRouter()
   const lite = useSearchParam('lite')
+  const { theme } = useTheme()
 
   const components = React.useMemo(
     () => ({
@@ -152,9 +150,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
       Tweet,
       propertyLastEditedTimeValue,
       propertyTextValue,
-      propertyDateValue
+      propertyDateValue,
     }),
-    []
+    [],
   )
 
   const siteMapPageUrl = React.useMemo(() => {
@@ -189,10 +187,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
   return (
     <>
       <NotionRenderer
-        bodyClassName='index-page'
+        bodyClassName="index-page"
         components={components}
+        darkMode={theme === 'dark'}
         recordMap={recordMap}
-        fullPage
         rootPageId={site.rootNotionPageId}
         rootDomain={site.domain}
         previewImages={!!recordMap.preview_images}

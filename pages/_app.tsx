@@ -10,15 +10,14 @@ import CsrProvider from 'providers/csr.provider'
 import UiProvider from 'providers/ui.provider'
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
-import 'styles/global.css'
-
+import 'styles/global.scss'
 // this might be better for dark mode
 // import 'prismjs/themes/prism-okaidia.css'
 // global style overrides for notion
-// import 'styles/notion.css'
+import 'styles/notion.scss'
 
 // global style overrides for prism theme (optional)
-// import 'styles/prism-theme.css'
+// import 'styles/prism-theme.scss'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -28,9 +27,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <div className="py-[10px] w-[1040px]">
             <Header />
             <Component {...pageProps} />
-            <Footer />
           </div>
         </div>
+        <Footer />
       </UiProvider>
     </CsrProvider>
   )

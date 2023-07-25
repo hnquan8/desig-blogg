@@ -9,8 +9,8 @@ type Tag = {
 type BlogPost = {
   id: string
   title: string
-  // description: string
   tags: Tag[]
   cover: string
   date: string
+  slug: string
 }

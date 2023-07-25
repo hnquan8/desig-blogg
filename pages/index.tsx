@@ -1,27 +1,31 @@
 // import { NotionPage } from '@/components/NotionPage'
-import { domain } from '@/lib/config'
-import { resolveNotionPage } from '@/lib/resolve-notion-page'
+// import { domain } from '@/lib/config'
+// import { resolveNotionPage } from '@/lib/resolve-notion-page'
+import BlogCard from '@/components/BlogCard'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import NotionService from 'services/notion-service'
 
-export const getStaticProps = async () => {
-  try {
-    const props = await resolveNotionPage(domain)
+export const getStaticProps: GetStaticProps = async () => {
+  const notionService = new NotionService()
+  const posts = await notionService.getPublishedBlogPosts()
 
-    return { props, revalidate: 10 }
-  } catch (err) {
-    console.error('page error', domain, err)
-    throw err
+  return {
+    props: {
+      posts,
+    },
   }
 }
 
-export default function NotionDomainPage(props) {
+export default function NotionDomainPage({
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <div className='justify-center min-h-screen'>
-        <div className='flex flex-col space-y-6 items-center justify-center p-16'>
-          <span className=' font-bold text-xl'>
-            Let s build dark mode with react. {props.pageId}
-          </span>
-          <button className='btn'>Button</button>
+      <div className="h-full pt-4 pb-16 mx-auto">
+        <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-2 lg:max-w-none">
+          {posts.map((post: BlogPost) => (
+            <BlogCard key={post.id} post={post} />
+          ))}
         </div>
       </div>
     </>
