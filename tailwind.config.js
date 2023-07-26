@@ -6,21 +6,51 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-
+  theme: {
+    extend: {
+      backgroundImage: {
+        'cover': "url('/components/banner/cover.png')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      }
+    }
+  },
   plugins: [require("daisyui"), require("@tailwindcss/typography")],
   daisyui: {
-    themes: ['light','dark', 
+    themes: [
     {
-      mytheme: { 
-            "primary": "#34d399",
-            "secondary": "#f3e8ff",
-            "accent": "#1dcdbc",    
-            "neutral": "#2b3440",
-            "base-100": "#F5F5F5",
-            "info": "#3abff8",
-            "success": "#36d399",
-            "warning": "#fbbd23",
-            "error": "#f87272",
+      light: {
+        ...require("daisyui/src/theming/themes")["[data-theme=light]"],
+        "color-scheme": "light",
+        "primary": "#7767F6",
+        "primary-content": "#ffffff",
+        "secondary": "#D926AA",
+        "secondary-content": "#ffffff",
+        "accent": "#1FB2A5",
+        "accent-content": "#ffffff",
+        "neutral": "#2a323c",
+        "neutral-focus": "#242b33",
+        "neutral-content": "#707072",
+        "base-100": "#f5f5f5",
+        "base-200": "#ffffff",
+        "base-300": "#E7E7E8",
+        "base-content": "#000",
+      },
+      dark: {
+        ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+        "color-scheme": "dark",
+        "primary": "#7767F6",
+        "primary-content": "#ffffff",
+        "secondary": "#D926AA",
+        "secondary-content": "#ffffff",
+        "accent": "#1FB2A5",
+        "accent-content": "#ffffff",
+        "neutral": "#2a323c",
+        "neutral-focus": "#242b33",
+        "neutral-content": "#A0A0A1",
+        "base-100": "#111014",
+        "base-200": "#28282C",
+        "base-300": "#404043",
+        "base-content": "#FFFFFFD9",
       },
     },],
   },

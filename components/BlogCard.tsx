@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { FunctionComponent } from 'react'
 
 type BlogCardProps = {
@@ -6,41 +6,27 @@ type BlogCardProps = {
 }
 
 const BlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
+  const router = useRouter()
   return (
-    <Link href={`/${post.slug}`}>
-      <a className="transition duration-300 hover:scale-105">
-        <div
-          key={post.title}
-          className="flex flex-col rounded-xl shadow-lg overflow-hidden"
-        >
-          <div className="flex-shrink-0">
-            <img className="h-64 w-full object-fit" src={post.cover} alt="" />
-          </div>
-          <div className="flex-1 pt-2 pb-6 px-4 flex flex-col justify-between">
-            <div className="flex-1">
-              <span className="block mt-2">
-                <h3 className="text-xl font-semibold">{post.title}</h3>
-              </span>
-
-              {/* <span className="block mt-2">
-                                <p className="text-sm text-gray-600">{post.description}</p>
-                            </span> */}
-
-              <span className="block mt-2 space-x-4">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag.id}
-                    className="bg-green-300 text-green-800 px-2 py-1 text-xs rounded-lg"
-                  >
-                    #{tag.name}
-                  </span>
-                ))}
-              </span>
+    <div
+      onClick={() => router.push(`/${post.slug}`)}
+      className="card w-96 bg-base-200"
+    >
+      <figure className="px-10 pt-10">
+        <img src={post.cover} alt="" className="rounded-xl" />
+      </figure>
+      <div className="card-body items-center">
+        <h2 className="card-title">{post.title}</h2>
+        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <div className="card-actions">
+          {post.tags.map((tag) => (
+            <div key={tag.id} className="badge badge-secondary">
+              {tag.name}
             </div>
-          </div>
+          ))}
         </div>
-      </a>
-    </Link>
+      </div>
+    </div>
   )
 }
 

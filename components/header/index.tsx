@@ -1,15 +1,21 @@
 import Brand from 'components/brand'
 import { email } from 'configs/socials.constant'
+import { useRouter } from 'next/router'
 import { useTheme } from 'providers/ui.provider'
 
 ;('use client')
 
 const Header = () => {
+  const router = useRouter()
   const { theme, setTheme } = useTheme()
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <Brand style={{ cursor: 'pointer' }} theme={theme} />
+        <Brand
+          onClick={() => router.push('/')}
+          style={{ cursor: 'pointer' }}
+          theme={theme}
+        />
       </div>
       <div className="flex-none content-center ">
         <button onClick={() => window.open(email, '_blank')} className="mx-3">

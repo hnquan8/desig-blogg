@@ -1,13 +1,12 @@
-import { GetStaticProps } from 'next'
-
-import { NotionPage } from '@/components/NotionPage'
+import { NotionPage } from './NotionPage'
 import { domain } from '@/lib/config'
 import { getSiteMap } from '@/lib/get-site-map'
 import { resolveNotionPage } from '@/lib/resolve-notion-page'
 import { PageProps, Params } from '@/lib/types'
+import { GetStaticProps } from 'next'
 
 export const getStaticProps: GetStaticProps<PageProps, Params> = async (
-  context
+  context,
 ) => {
   const rawPageId = context.params.pageId as string
   try {
@@ -25,10 +24,10 @@ export async function getStaticPaths() {
   const staticPaths = {
     paths: Object.keys(siteMap.canonicalPageMap).map((pageId) => ({
       params: {
-        pageId
-      }
+        pageId,
+      },
     })),
-    fallback: true
+    fallback: true,
   }
   return staticPaths
 }

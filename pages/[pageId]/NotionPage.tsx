@@ -1,5 +1,5 @@
-import { Loading } from './Loading'
-import { Page404 } from './Page404'
+import { Loading } from '../../components/Loading'
+// import { Page404 } from '../../components/Page404'
 import * as config from '@/lib/config'
 import { mapImageUrl } from '@/lib/map-image-url'
 import { mapPageUrl } from '@/lib/map-page-url'
@@ -97,6 +97,7 @@ const propertyLastEditedTimeValue = (
       month: 'long',
     })}`
   }
+
   return defaultFn()
 }
 
@@ -131,7 +132,7 @@ const propertyTextValue = (
 export const NotionPage: React.FC<types.PageProps> = ({
   site,
   recordMap,
-  error,
+  // error,
   pageId,
 }) => {
   const router = useRouter()
@@ -172,9 +173,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
     return <Loading />
   }
 
-  if (error || !site || !block) {
-    return <Page404 site={site} pageId={pageId} error={error} />
-  }
+  // if (error || !site || !block) {
+  //   return <Page404 site={site} pageId={pageId} error={error} />
+  // }
 
   if (!config.isServer) {
     // add important objects to the window global for easy debugging

@@ -4,14 +4,14 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 ;('use client')
 
-const getTheme = (): Theme => {
+const autoTheme = (): Theme => {
   if (
     typeof window !== 'undefined' &&
     window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches
+    window.matchMedia('(prefers-color-scheme: light)').matches
   )
-    return 'dark'
-  return 'light'
+    return 'light'
+  return 'dark'
 }
 
 /**
@@ -27,7 +27,7 @@ export const useUiStore = create<UiStore>()(
   devtools(
     persist(
       (set) => ({
-        theme: getTheme(),
+        theme: 'light',
         setTheme: (theme: Theme) => set({ theme }, false, 'setTheme'),
       }),
       {
@@ -43,7 +43,10 @@ export const useUiStore = create<UiStore>()(
  */
 
 export const useTheme = () => {
-  return useUiStore(({ theme, setTheme }) => ({ theme, setTheme }))
+  return useUiStore(({ theme, setTheme }) => ({
+    theme: theme || autoTheme(),
+    setTheme,
+  }))
 }
 
 /**
@@ -53,7 +56,6 @@ export const useTheme = () => {
 export default function UiProvider({ children }: { children: ReactNode }) {
   const { theme } = useTheme()
 
-  console.log('theme', theme)
   // Listen theme events
   useEffect(() => {
     document.body.setAttribute('data-theme', theme)

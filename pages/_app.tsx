@@ -1,4 +1,5 @@
 // global styles shared across the entire site
+import Banner from '@/components/banner'
 import Footer from '@/components/footer'
 import Header from '@/components/header'
 // used for rendering equations (optional)
@@ -23,9 +24,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <CsrProvider>
       <UiProvider>
-        <div className="flex justify-center bg-base-100">
+        <div className="flex flex-col items-center justify-center">
+          <Header />
+          <Banner />
           <div className="py-[10px] w-[1040px]">
-            <Header />
             <Component {...pageProps} />
           </div>
         </div>
