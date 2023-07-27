@@ -20,6 +20,7 @@ export type BrandProps = {
 }
 
 export default function Brand({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick = () => {},
   size = 80,
   style = {},

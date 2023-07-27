@@ -24,6 +24,32 @@ body {
     'Droid Sans', 'Helvetica Neue', 'Noto Sans', sans-serif;
   font-family: var(--notion-font);
   overflow-x: hidden;
+  position: relative;
 }
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  .swiper-pagination{
+    bottom: -4px !important; 
+    .swiper-pagination-bullet{
+      width: 40px !important;
+      height: 4px !important;
+      border-radius: 20px;
+      background-color: #111014;
+    }
+  }
+}
+
+[data-theme='dark']{
+  .swiper-pagination{
+    .swiper-pagination-bullet{
+      background-color: #F3F3F3;
+    }
+  }
+}
+
+
+
 
 

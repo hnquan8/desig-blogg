@@ -9,7 +9,7 @@ const Header = () => {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 py-[10px] w-[1040px]">
       <div className="flex-1">
         <Brand
           onClick={() => router.push('/')}

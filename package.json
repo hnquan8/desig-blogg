@@ -52,6 +52,7 @@
     "react-tweet-embed": "^2.0.0",
     "react-use": "^17.3.2",
     "rss": "^1.2.2",
+    "swiper": "9.4.1",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

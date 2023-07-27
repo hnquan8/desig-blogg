@@ -11,8 +11,7 @@ import { NavigationLink } from './site-config'
 import {
   NavigationStyle,
   PageUrlOverridesInverseMap,
-  PageUrlOverridesMap,
-  Site
+  PageUrlOverridesMap
 } from './types'
 
 export const rootNotionPageId: string = parsePageId(
@@ -97,14 +96,6 @@ export const port = getEnv('PORT', '3000')
 export const host = isDev ? `http://localhost:${port}` : `https://${domain}`
 
 // ----------------------------------------------------------------------------
-
-export const site: Site = {
-  domain,
-  name,
-  rootNotionPageId,
-  rootNotionSpaceId,
-  description
-}
 
 function cleanPageUrlMap(
   pageUrlMap: PageUrlOverridesMap,

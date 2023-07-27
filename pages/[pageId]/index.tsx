@@ -1,37 +1,71 @@
-import { NotionPage } from './NotionPage'
-import { domain } from '@/lib/config'
-import { getSiteMap } from '@/lib/get-site-map'
-import { resolveNotionPage } from '@/lib/resolve-notion-page'
-import { PageProps, Params } from '@/lib/types'
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 
-export const getStaticProps: GetStaticProps<PageProps, Params> = async (
-  context,
-) => {
+import NotionService from 'services/notion.service'
+
+import NotionPage from '@/components/NotionPage'
+import BlogCard from '@/components/blogCard/BlogCard'
+import { domain } from '@/lib/config'
+import { resolveNotionPage } from '@/lib/resolve-notion-page'
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const notionService = new NotionService()
+
+  const posts = await notionService.getAllBlogPosts()
+
+  const paths = posts.map((post) => {
+    return `/${post.slug}`
+  })
+
+  return {
+    paths,
+    fallback: false
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const notionService = new NotionService()
   const rawPageId = context.params.pageId as string
   try {
-    const props = await resolveNotionPage(domain, rawPageId)
-    return { props, revalidate: 10 }
-  } catch (err) {
-    console.error('page error', domain, rawPageId, err)
-    throw err
-  }
-}
+    const resolve = await resolveNotionPage(domain, rawPageId)
 
-export async function getStaticPaths() {
-  const siteMap = await getSiteMap()
+    const allPosts = await notionService.getAllBlogPosts()
+    const blogPost = await notionService.getBlogPost(resolve.pageId)
 
-  const staticPaths = {
-    paths: Object.keys(siteMap.canonicalPageMap).map((pageId) => ({
-      params: {
-        pageId,
+    const relatedPosts = allPosts.filter((post) =>
+      post.tags.some((tag) =>
+        blogPost.tags.some((pageTag) => pageTag.name === tag.name)
+      )
+    )
+    return {
+      props: {
+        resolve,
+        relatedPosts
       },
-    })),
-    fallback: true,
+      revalidate: 86400 // 1 day ?
+    }
+  } catch (error) {
+    console.error('page error', domain, rawPageId, error)
+    throw error
   }
-  return staticPaths
 }
 
-export default function NotionDomainDynamicPage(props) {
-  return <NotionPage {...props} />
+export default function DetailPage({
+  resolve,
+  relatedPosts
+}: //
+InferGetStaticPropsType<typeof getStaticProps>) {
+  return (
+    <>
+      <NotionPage {...resolve} />
+      <div className='w-[1040px] mt-8 mb-20'>
+        <h2 className='font-semibold text-4xl'>Related articles</h2>
+        <div className='mt-8 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none'>
+          {relatedPosts &&
+            relatedPosts.map((post: BlogPost) => (
+              <BlogCard key={post.id} post={post} property='related' />
+            ))}
+        </div>
+      </div>
+    </>
+  )
 }

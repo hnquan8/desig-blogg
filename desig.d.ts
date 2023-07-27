@@ -10,7 +10,7 @@ type BlogPost = {
   id: string
   title: string
   tags: Tag[]
-  cover: string
+  cover?: string
   date: string
   slug: string
 }

@@ -1,11 +1,7 @@
-import { CSSProperties, useEffect, useState } from 'react'
-
-import Brand from 'components/brand'
-import { useDebounce } from 'react-use'
-
 import styles from './index.module.scss'
-
-;('use client')
+import Brand from 'components/brand'
+import { CSSProperties, useEffect, useState } from 'react'
+import { useDebounce } from 'react-use'
 
 export type RippleProps = { style?: CSSProperties }
 export const Ripple = ({ style = {} }: RippleProps) => {
@@ -29,7 +25,7 @@ export default function Splash({ open }: SplashProps) {
       if (!open) setDisplay('none')
     },
     500,
-    [open]
+    [open],
   )
 
   useEffect(() => {
