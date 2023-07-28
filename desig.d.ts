@@ -11,6 +11,7 @@ type BlogPost = {
   title: string
   description: string
   tags: Tag[]
+  image: string
   cover?: string
   date: string
   slug: string

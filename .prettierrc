@@ -10,9 +10,9 @@
   "trailingComma": "none",
   "importOrder": [
     "^(react/(.*)$)|^(react$)|^(next/(.*)$)|^(next$)",
-    "<THIRD_PARTY_MODULES>",
-    "^(@/lib/(.*)$)|^(@/components/(.*)$)|^(@/styles/(.*)$)",
-    "^[./]"
+    "^(services/(.*)$)|^(configs/(.*)$)|^(providers/(.*)$)|^(@/components/(.*)$)",
+    "^(static/(.*)$)|^[./]",
+    "<THIRD_PARTY_MODULES>"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,

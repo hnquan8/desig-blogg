@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
-import cover from './cover.svg'
-import logo from './logo.svg'
+import cover from 'static/images/cover.svg'
+import logo from 'static/images/icons/desig.svg'
 
 const Banner = () => {
   return (

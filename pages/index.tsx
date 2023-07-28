@@ -1,17 +1,16 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 
+import Banner from '@/components/banner'
+import BlogCard from '@/components/blogCard'
+import Header from '@/components/header'
 import NotionService from 'services/notion.service'
+
 import { Keyboard, Navigation, Pagination } from 'swiper'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { Swiper, SwiperSlide } from 'swiper/react'
-
-import Banner from '@/components/banner'
-import BlogCard from '@/components/blogCard/BlogCard'
-import NewBlogCard from '@/components/blogCard/NewBlogCard'
-import Header from '@/components/header'
 
 export const getStaticProps: GetStaticProps = async () => {
   const notionService = new NotionService()
@@ -67,7 +66,7 @@ export default function Home({
           >
             {newPosts.slice(0, 3).map((post: BlogPost) => (
               <SwiperSlide key={post.id}>
-                <NewBlogCard post={post} />
+                <BlogCard post={post} size='LARGE' />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -76,7 +75,7 @@ export default function Home({
         <h2 className='mt-20 font-semibold text-4xl'>All articles</h2>
         <div className='mt-8 w-full mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none'>
           {allPosts.map((post: BlogPost) => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post.id} post={post} size='SMALL' />
           ))}
         </div>
       </div>

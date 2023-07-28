@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { Fragment } from 'react'
 
 import { parsePageId } from 'notion-utils'
-import NotionService from 'services/notion.service'
 
-import BlogCard from '@/components/blogCard/BlogCard'
-import { domain } from '@/lib/config'
-import { resolveNotionPage } from '@/lib/resolve-notion-page'
+import BlogCard from '@/components/blogCard'
+import { domain } from 'providers/notion/config'
+import { resolveNotionPage } from 'providers/notion/resolve-notion-page'
+import NotionService from 'services/notion.service'
 
 import LoadingBlog from './LoadingBlog'
 
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const [resolve, allPosts, blogPost] = await Promise.all([
       resolveNotionPage(rawBlogId),
       notionService.getAllBlogPosts(),
-      notionService.getBlogPost(blogId)
+      notionService.getBlogDetails(blogId)
     ])
 
     const relatedPosts = allPosts.filter((post) =>
@@ -94,7 +94,7 @@ export default function DetailPage({
         <h2 className='font-semibold text-4xl'>Related articles</h2>
         <div className='mt-8 mx-auto grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none'>
           {relatedPosts.map((post: BlogPost) => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post.id} post={post} size='SMALL' />
           ))}
         </div>
       </div>

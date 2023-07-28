@@ -1,13 +1,4 @@
-import cs from 'classnames'
-
-import styles from './styles.module.scss'
-
-export const LoadingIcon = (props) => {
-  const { className, ...rest } = props
-  return (
-    <svg
-      className={cs(styles.loadingIcon, className)}
-      {...rest}
+<svg
       viewBox='0 0 24 24'
     >
       <defs>
@@ -57,5 +48,3 @@ export const LoadingIcon = (props) => {
         </g>
       </g>
     </svg>
-  )
-}

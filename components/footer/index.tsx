@@ -1,61 +1,54 @@
 import { useRouter } from 'next/router'
 
+import Brand from 'components/brand'
 import {
-  email,
-  github,
-  mirror,
-  pitchdeck,
-  twitter,
-  youtube
+  EMAIL,
+  GITHUB,
+  MIRROR,
+  PITCHDECK,
+  TWITTER,
+  YOUTUBE
 } from 'configs/socials.constant'
 import { useTheme } from 'providers/ui.provider'
 
-import Brand from '../brand'
-
-const socials = [
+const SOCIALS = [
   {
-    id: 1,
     name: 'TWITTER',
-    link: twitter
+    link: TWITTER
   },
   {
-    id: 2,
     name: 'GITHUB',
-    link: github
+    link: GITHUB
   },
   {
-    id: 3,
     name: 'MIRROR',
-    link: mirror
+    link: MIRROR
   },
   {
-    id: 4,
     name: 'YOUTUBE',
-    link: youtube
+    link: YOUTUBE
   }
 ]
 
-const abouts = [
+const ABOUTS = [
   {
-    id: 1,
     name: 'PICK DECK',
-    link: pitchdeck
+    link: PITCHDECK
   },
   {
-    id: 2,
     name: 'POLICY',
     link: '/'
   },
   {
-    id: 3,
     name: 'CONTACT US',
-    link: email
+    link: EMAIL
   }
 ]
 
 export default function Footer() {
   const router = useRouter()
   const { theme } = useTheme()
+
   return (
     <footer className='text-base-content flex flex-col items-center text-neutral-content text-[14px]'>
       <div className='flex py-[10px] lg:w-[1040px] items-center'>
@@ -74,12 +67,13 @@ export default function Footer() {
           <div>Desig © 2023, All Rights Reserved.</div>
         </div>
       </div>
+
       <div className='border-t-[1px] border-t-base-300 w-full flex justify-center'>
         <div className='bg-base-300'>
           <div className='grid gap-[1px] grid-cols-4 items-center'>
-            {socials.map((social) => (
+            {SOCIALS.map((social) => (
               <a
-                key={social.id}
+                key={social.name}
                 className='flex w-[100px] sm:w-[150px] xl:w-[260px] h-[54px] items-center justify-center bg-base-100'
                 href={social.link}
                 target='_blank'
@@ -91,12 +85,13 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
       <div className='border-t-[1px] border-t-base-300 w-full flex justify-center'>
         <div className='bg-base-300'>
           <div className='grid gap-[1px] grid-cols-3 items-center'>
-            {abouts.map((about) => (
+            {ABOUTS.map((about) => (
               <a
-                key={about.id}
+                key={about.name}
                 className='flex w-[100px] sm:w-[150px] xl:w-[260px] h-[54px] items-center justify-center bg-base-100'
                 href={about.link}
                 target='_blank'

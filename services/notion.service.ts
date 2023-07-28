@@ -1,5 +1,6 @@
 import { Client } from '@notionhq/client'
 
+const database = process.env.NOTION_BLOG_DATABASE_ID
 export default class NotionService {
   client: Client
   constructor() {
@@ -7,22 +8,19 @@ export default class NotionService {
       auth: process.env.NOTION_API_KEY
     })
   }
+
   async getAllBlogPosts(): Promise<BlogPost[]> {
-    const database = process.env.NOTION_BLOG_DATABASE_ID
-    // list blog posts
-    const response = await this.client.databases.query({
+    const blogs = await this.client.databases.query({
       database_id: database
     })
 
-    return response.results.map((res) => {
-      return NotionService.pageToPostTransformer(res)
+    return blogs.results.map((blog) => {
+      return NotionService.convertToBlog(blog)
     })
   }
 
   async getNewBlogPosts(): Promise<BlogPost[]> {
-    const database = process.env.NOTION_BLOG_DATABASE_ID
-    // list blog posts
-    const response = await this.client.databases.query({
+    const newBlogs = await this.client.databases.query({
       database_id: database,
       sorts: [
         {
@@ -31,30 +29,33 @@ export default class NotionService {
         }
       ]
     })
-    return response.results.map((res) => {
-      return NotionService.pageToPostTransformer(res)
+
+    return newBlogs.results.map((blog) => {
+      return NotionService.convertToBlog(blog)
     })
   }
 
-  async getBlogPost(pageId: string): Promise<BlogPost> {
-    const response = await this.client.pages.retrieve({ page_id: pageId })
-    if (!response) {
+  async getBlogDetails(pageId: string): Promise<BlogPost> {
+    const blogDetails = await this.client.pages.retrieve({ page_id: pageId })
+    if (!blogDetails) {
       return null
     }
-    return NotionService.pageToPostTransformer(response)
+
+    return NotionService.convertToBlog(blogDetails)
   }
 
-  private static pageToPostTransformer(page: any): BlogPost {
-    const path = page.url
+  private static convertToBlog(blog: any): BlogPost {
+    const path = blog.url
     const slug = path ? path.split('/').slice(-1)[0] : ''
 
     return {
-      id: page.id,
-      title: page.properties.Name?.title[0].plain_text,
-      tags: page.properties.Tags?.multi_select,
-      cover: page.cover?.file?.url || '',
-      description: page.properties.Description?.rich_text[0]?.plain_text || '',
-      date: page.properties.Date?.date.start,
+      id: blog.id,
+      title: blog.properties.Name?.title[0].plain_text,
+      tags: blog.properties.Tags?.multi_select,
+      image: blog.properties['Files & media'].files[0].file?.url || '',
+      description: blog.properties.Description?.rich_text[0]?.plain_text || '',
+      date: blog.properties.Date?.date.start,
+      cover: blog.cover.file?.url || '',
       slug: slug
     }
   }

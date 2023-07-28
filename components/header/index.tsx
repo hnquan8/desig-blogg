@@ -1,12 +1,18 @@
+// import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Brand from 'components/brand'
-import { email } from 'configs/socials.constant'
+
+import { EMAIL } from 'configs/socials.constant'
 import { useTheme } from 'providers/ui.provider'
+
+// import darkIcon from 'static/images/dark-icon.svg'
+// import lightIcon from 'static/images/light-icon.svg'
 
 const Header = () => {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
+
   return (
     <div className='navbar bg-base-100 p-[10px] lg:w-[1040px] lg:px-0'>
       <div className='flex-1'>
@@ -17,7 +23,7 @@ const Header = () => {
         />
       </div>
       <div className='flex-none content-center '>
-        <button onClick={() => window.open(email, '_blank')} className='mx-3'>
+        <button onClick={() => window.open(EMAIL, '_blank')} className='mx-3'>
           Say Hi to Us 👋
         </button>
         <label className='swap swap-rotate'>
@@ -41,6 +47,16 @@ const Header = () => {
           >
             <path d='M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z' />
           </svg>
+          {/* <Image
+            className='swap-on fill-current w-7 h-7'
+            src={lightIcon}
+            alt='dark'
+          />
+          <Image
+            className='swap-off fill-current w-7 h-7'
+            src={darkIcon}
+            alt='light'
+          /> */}
         </label>
       </div>
     </div>

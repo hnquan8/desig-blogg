@@ -19,9 +19,12 @@
     "incremental": true,
     "paths": {
       "@/components/*": ["components/*"],
-      "@/lib/*": ["lib/*"],
+      "@/lib/*": ["providers/notion/*"],
       "@/styles/*": ["styles/*"]
     }
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": false
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts","desig.d.ts", "**/*.ts", "**/*.tsx", "site.config.ts"]

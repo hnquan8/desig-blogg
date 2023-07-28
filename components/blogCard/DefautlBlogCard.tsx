@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FunctionComponent } from 'react'
 
-import hero from './hero.png'
+import hero from 'static/images/hero.png'
 
 const BlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
   const router = useRouter()
@@ -10,17 +10,17 @@ const BlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
   return (
     <div
       onClick={() => router.push(`/${post.slug}`)}
-      className='card w-[330px] h-[431px] bg-base-200 cursor-pointer'
+      className='card w-[330px] h-[440px] bg-base-200 cursor-pointer'
     >
       <figure className='px-5 pt-4'>
         <Image
-          src={post.cover || hero}
+          src={post.image || hero}
           alt=''
           className='rounded-xl'
           objectFit='cover'
           objectPosition='center'
           width={290}
-          height={180}
+          height={160}
         />
       </figure>
       <div className='card-body p-5'>

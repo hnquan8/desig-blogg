@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FunctionComponent } from 'react'
 
-import hero from './hero.png'
+import hero from 'static/images/hero.png'
 
 const NewBlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
   const router = useRouter()
@@ -15,7 +15,7 @@ const NewBlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
       <figure className='pt-5 px-5 lg:px-7 lg:pt-0'>
         <div className='w-[400px] h-[180px] sm:w-[600px] sm:h-[220px] lg:w-[630px] lg:h-[380px] relative'>
           <Image
-            src={post.cover || hero}
+            src={post.image || hero}
             alt='cover'
             className='rounded-xl'
             objectFit='cover'

@@ -1,10 +1,17 @@
 import * as React from 'react'
+import Image from 'next/image'
 
-import { LoadingIcon } from './LoadingIcon'
 import styles from './styles.module.scss'
+import LoadingIcon from 'static/images/LoadingIcon.svg'
 
 export const Loading: React.FC = () => (
   <div className={styles.container}>
-    <LoadingIcon />
+    <Image
+      src={LoadingIcon}
+      alt='cover'
+      layout='fill'
+      objectFit='cover'
+      objectPosition='center'
+    />
   </div>
 )
