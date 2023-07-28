@@ -4,11 +4,11 @@ export default class NotionService {
   client: Client
   constructor() {
     this.client = new Client({
-      auth: 'secret_66ZSMDeotqsC1Lx0CPvTGe303IxyXiMCUy8sPDXD58b'
+      auth: process.env.NOTION_API_KEY
     })
   }
   async getAllBlogPosts(): Promise<BlogPost[]> {
-    const database = '677f0fd492ed4884af268db31eebb0ec'
+    const database = process.env.NOTION_BLOG_DATABASE_ID
     // list blog posts
     const response = await this.client.databases.query({
       database_id: database
@@ -20,7 +20,7 @@ export default class NotionService {
   }
 
   async getNewBlogPosts(): Promise<BlogPost[]> {
-    const database = '677f0fd492ed4884af268db31eebb0ec'
+    const database = process.env.NOTION_BLOG_DATABASE_ID
     // list blog posts
     const response = await this.client.databases.query({
       database_id: database,
@@ -52,7 +52,8 @@ export default class NotionService {
       id: page.id,
       title: page.properties.Name?.title[0].plain_text,
       tags: page.properties.Tags?.multi_select,
-      cover: '',
+      cover: page.cover?.file?.url || '',
+      description: page.properties.Description?.rich_text[0]?.plain_text || '',
       date: page.properties.Date?.date.start,
       slug: slug
     }

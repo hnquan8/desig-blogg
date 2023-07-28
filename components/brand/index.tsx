@@ -1,14 +1,13 @@
-import dark from './brand-in-dark.svg'
-import light from './brand-in-light.svg'
-import logo from './logo.svg'
 import Image from 'next/image'
 import { CSSProperties, useEffect, useState } from 'react'
 
-;('use client')
+import dark from './brand-in-dark.svg'
+import light from './brand-in-light.svg'
+import logo from './logo.svg'
 
 const brands: Record<string, any> = {
   light,
-  dark,
+  dark
 }
 
 export type BrandProps = {
@@ -20,12 +19,11 @@ export type BrandProps = {
 }
 
 export default function Brand({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick = () => {},
   size = 80,
   style = {},
   named = true,
-  theme = '',
+  theme = ''
 }: BrandProps) {
   const [system, setSystem] = useState<Theme>('light')
 
@@ -33,14 +31,14 @@ export default function Brand({
     setSystem(
       window.matchMedia('(prefers-color-scheme: light)').matches
         ? 'light'
-        : 'dark',
+        : 'dark'
     )
   }, [])
 
   const src = named ? brands[theme || system] : logo
   return (
     <Image
-      alt="desig-brand"
+      alt='desig-brand'
       src={src}
       width={size}
       style={style}

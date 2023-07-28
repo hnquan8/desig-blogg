@@ -4,7 +4,7 @@ import { parsePageId } from 'notion-utils'
 import { pageUrlAdditions, pageUrlOverrides } from './config'
 import { getPage } from './notion'
 
-export async function resolveNotionPage(domain: string, rawPageId?: string) {
+export async function resolveNotionPage(rawPageId?: string) {
   let pageId: string
   let recordMap: ExtendedRecordMap
 

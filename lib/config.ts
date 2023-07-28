@@ -1,12 +1,6 @@
-/**
- * Site-wide app configuration.
- *
- * This file pulls from the root "site.config.ts" as well as environment variables
- * for optional depenencies.
- */
 import { parsePageId } from 'notion-utils'
 
-import { getEnv, getSiteConfig } from './get-config-value'
+import { getSiteConfig } from './get-config-value'
 import { NavigationLink } from './site-config'
 import {
   NavigationStyle,
@@ -91,9 +85,6 @@ export const navigationLinks: Array<NavigationLink | null> = getSiteConfig(
 export const isSearchEnabled: boolean = getSiteConfig('isSearchEnabled', true)
 
 export const isServer = typeof window === 'undefined'
-
-export const port = getEnv('PORT', '3000')
-export const host = isDev ? `http://localhost:${port}` : `https://${domain}`
 
 // ----------------------------------------------------------------------------
 

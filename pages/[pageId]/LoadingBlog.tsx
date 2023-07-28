@@ -98,7 +98,6 @@ const propertyLastEditedTimeValue = (
       month: 'long'
     })}`
   }
-
   return defaultFn()
 }
 
@@ -130,7 +129,7 @@ const propertyTextValue = (
   return defaultFn()
 }
 
-const NotionPage: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
+const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   const router = useRouter()
   const { theme } = useTheme()
 
@@ -197,4 +196,4 @@ const NotionPage: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   )
 }
 
-export default NotionPage
+export default LoadingBlog

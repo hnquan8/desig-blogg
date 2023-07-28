@@ -9,14 +9,12 @@ import 'styles/global.scss'
 import 'styles/notion.scss'
 
 import Footer from '@/components/footer'
-import Header from '@/components/header'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <CsrProvider>
       <UiProvider>
         <div className='flex flex-col items-center justify-center'>
-          <Header />
           <Component {...pageProps} />
         </div>
         <Footer />

@@ -19,10 +19,12 @@
 .notion-page {
   padding-bottom: calc(max(5vh, 32px)) !important;
   line-height: 1.65;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .index-page {
-  --notion-max-width: 900px;
+  --notion-max-width: 686px;
 }
 
 .notion-text {
@@ -73,7 +75,7 @@
 }
 
 .notion-gallery-grid .notion-property-text {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .notion-collection-card {
@@ -174,10 +176,18 @@
   display: none;
 }
 
-.notion-collection-row-property .notion-property {
-  display: flex;
-  justify-content: center;
+.notion-collection-row{
+  display: none;
 }
+
+.notion-collection-row-property {
+  display: none;
+  .notion-property {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 
 .notion-collection-row-value {
   display: flex;
