@@ -13,27 +13,31 @@ import LoadingBlog from './LoadingBlog'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const notionService = new NotionService()
-  const posts = await notionService.getAllBlogPosts()
-
-  const paths = posts.map((post) => {
-    return `/${post.slug}`
-  })
-
-  return {
-    paths,
-    fallback: false
+  try {
+    const allBlogPosts = await notionService.getAllBlogPosts()
+    return {
+      paths: allBlogPosts.map((post) => ({
+        params: { blogId: post.slug }
+      })),
+      fallback: true
+    }
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: true
+    }
   }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const notionService = new NotionService()
-  const rawPageId = context.params.pageId as string
-  const pageId = parsePageId(rawPageId)
+  const rawBlogId = context.params.blogId as string
+  const blogId = parsePageId(rawBlogId)
   try {
     const [resolve, allPosts, blogPost] = await Promise.all([
-      resolveNotionPage(rawPageId),
+      resolveNotionPage(rawBlogId),
       notionService.getAllBlogPosts(),
-      notionService.getBlogPost(pageId)
+      notionService.getBlogPost(blogId)
     ])
 
     const relatedPosts = allPosts.filter((post) =>
@@ -47,10 +51,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
         blogPost,
         relatedPosts
       },
-      revalidate: 10 // 10s ?
+      revalidate: 60 // 30s ?
     }
   } catch (error) {
-    console.error('page error', domain, rawPageId, error)
+    console.error('page error', domain, rawBlogId, error)
     return {
       props: {
         resolve: null,
@@ -58,7 +62,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         relatedPosts: null
       }
     }
-    throw error
   }
 }
 
@@ -83,7 +86,7 @@ export default function DetailPage({
           />
         </div>
       )}
-      <h1 className='w-[386px] sm:w-[686px] xl:w-[1040px] font-semibold text-4xl my-8 '>
+      <h1 className='w-[386px] sm:w-[686px] font-semibold text-4xl mt-12 '>
         {blogPost.title}
       </h1>
       <LoadingBlog {...resolve} />

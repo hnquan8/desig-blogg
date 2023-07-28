@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async () => {
       allPosts,
       newPosts
     },
-    revalidate: 10 // 10s ?
+    revalidate: 60 // 60s ?
   }
 }
 

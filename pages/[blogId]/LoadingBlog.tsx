@@ -11,7 +11,7 @@ import TweetEmbed from 'react-tweet-embed'
 
 import * as config from '@/lib/config'
 import * as types from '@/lib/types'
-import { Loading } from '@/components/Loading'
+import { Loading } from '@/components/loading/Loading'
 import { mapImageUrl } from '@/lib/map-image-url'
 
 // import { mapPageUrl } from '@/lib/map-page-url'
@@ -150,26 +150,12 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
     []
   )
 
-  // const siteMapPageUrl = React.useMemo(() => {
-  //   const params: any = {}
-  //   if (lite) params.lite = lite
-
-  //   const searchParams = new URLSearchParams(params)
-  //   return mapPageUrl(site, recordMap, searchParams)
-  // }, [site, recordMap, lite])
-
   const keys = Object.keys(recordMap?.block || {})
   const block = recordMap?.block?.[keys[0]]?.value
-
-  // const footer = React.useMemo(() => <Footer />, [])
 
   if (router.isFallback) {
     return <Loading />
   }
-
-  // if (error || !site || !block) {
-  //   return <Page404 site={site} pageId={pageId} error={error} />
-  // }
 
   if (!config.isServer) {
     // add important objects to the window global for easy debugging
