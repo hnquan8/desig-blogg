@@ -4,17 +4,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { formatDate } from 'notion-utils'
-import { NotionRenderer } from 'react-notion-x'
-import TweetEmbed from 'react-tweet-embed'
-
 import * as config from 'providers/notion/config'
 import * as types from 'providers/notion/types'
 import { Loading } from '@/components/loading/Loading'
 import { mapImageUrl } from 'providers/notion/map-image-url'
 import { useTheme } from 'providers/ui.provider'
 
-// import { mapPageUrl } from '@/lib/map-page-url'
+import { formatDate } from 'notion-utils'
+import { NotionRenderer } from 'react-notion-x'
+import TweetEmbed from 'react-tweet-embed'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components

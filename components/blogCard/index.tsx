@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 
-import DefautlBlogCard from './DefautlBlogCard'
 import NewBlogCard from './NewBlogCard'
+import DefautlBlogCard from './DefautlBlogCard'
 
 type CardSize = 'LARGE' | 'SMALL'
 type Props = {

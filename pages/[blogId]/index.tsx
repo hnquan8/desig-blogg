@@ -1,10 +1,9 @@
+import BlogCard from '@/components/blogCard'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import Image from 'next/image'
 import { Fragment } from 'react'
 
+import Image from 'next/image'
 import { parsePageId } from 'notion-utils'
-
-import BlogCard from '@/components/blogCard'
 import { domain } from 'providers/notion/config'
 import { resolveNotionPage } from 'providers/notion/resolve-notion-page'
 import NotionService from 'services/notion.service'
@@ -16,15 +15,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const allBlogPosts = await notionService.getAllBlogPosts()
     return {
-      paths: allBlogPosts.map((post) => ({
-        params: { blogId: post.slug }
+      paths: allBlogPosts.map(({ slug }) => ({
+        params: { blogId: slug },
       })),
-      fallback: true
+      fallback: true,
     }
   } catch (error) {
     return {
       paths: [],
-      fallback: true
+      fallback: true,
     }
   }
 }
@@ -37,21 +36,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const [resolve, allPosts, blogPost] = await Promise.all([
       resolveNotionPage(rawBlogId),
       notionService.getAllBlogPosts(),
-      notionService.getBlogDetails(blogId)
+      notionService.getBlogDetails(blogId),
     ])
 
     const relatedPosts = allPosts.filter((post) =>
       post.tags.some((tag) =>
-        blogPost.tags.some((pageTag) => pageTag.name === tag.name)
-      )
+        blogPost.tags.some((pageTag) => pageTag.name === tag.name),
+      ),
     )
     return {
       props: {
         resolve,
         blogPost,
-        relatedPosts
+        relatedPosts,
       },
-      revalidate: 60 // 30s ?
+      revalidate: 3600, // 1 hours ?
     }
   } catch (error) {
     console.error('page error', domain, rawBlogId, error)
@@ -59,8 +58,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: {
         resolve: null,
         blogPost: null,
-        relatedPosts: null
-      }
+        relatedPosts: null,
+      },
     }
   }
 }
@@ -68,33 +67,33 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export default function DetailPage({
   resolve,
   blogPost,
-  relatedPosts
+  relatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!blogPost || !resolve || !relatedPosts) {
-    return <Fragment></Fragment>
+    return <Fragment />
   }
 
   return (
     <>
       {blogPost.cover && (
-        <div className='w-full h-[360px] relative'>
+        <div className="w-full h-[360px] relative">
           <Image
-            alt='cover'
+            alt="cover"
             src={blogPost.cover}
-            objectFit='cover'
-            layout='fill'
+            objectFit="cover"
+            layout="fill"
           />
         </div>
       )}
-      <h1 className='w-[386px] sm:w-[686px] font-semibold text-4xl mt-12 '>
+      <h1 className="w-[386px] sm:w-[686px] font-semibold text-4xl mt-12 ">
         {blogPost.title}
       </h1>
       <LoadingBlog {...resolve} />
-      <div className='w-[386px] sm:w-[686px] lg:w-[1040px] mt-8 mb-20'>
-        <h2 className='font-semibold text-4xl'>Related articles</h2>
-        <div className='mt-8 mx-auto grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none'>
+      <div className="w-[386px] sm:w-[686px] lg:w-[1040px] mt-8 mb-20">
+        <h2 className="font-semibold text-4xl">Related articles</h2>
+        <div className="mt-8 mx-auto grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
           {relatedPosts.map((post: BlogPost) => (
-            <BlogCard key={post.id} post={post} size='SMALL' />
+            <BlogCard key={post.id} post={post} size="SMALL" />
           ))}
         </div>
       </div>
