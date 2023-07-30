@@ -26,8 +26,8 @@ export default function Splash({ open }: SplashProps) {
     () => {
       if (!open) setDisplay('none')
     },
-    500,
-    [open]
+    300,
+    [open],
   )
 
   useEffect(() => {

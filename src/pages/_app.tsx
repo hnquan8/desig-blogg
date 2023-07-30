@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 
-import Footer from '@/components/footer'
+import Footer from 'components/footer'
 import CsrProvider from 'providers/csr.provider'
 import UiProvider from 'providers/ui.provider'
 
@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <CsrProvider>
       <UiProvider>
-        <div className='flex flex-col items-center justify-center'>
+        <div className="flex flex-col items-center justify-center">
           <Component {...pageProps} />
         </div>
         <Footer />

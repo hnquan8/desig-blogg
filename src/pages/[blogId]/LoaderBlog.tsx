@@ -2,11 +2,11 @@ import * as React from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 import * as config from 'providers/notion/config'
 import * as types from 'providers/notion/types'
-import { Loading } from '@/components/loading/Loading'
+import Loading from 'components/loading/loading'
 import { mapImageUrl } from 'providers/notion/map-image-url'
 import { useTheme } from 'providers/ui.provider'
 
@@ -52,25 +52,25 @@ const Code = dynamic(() =>
       import('prismjs/components/prism-stylus.js'),
       import('prismjs/components/prism-swift.js'),
       import('prismjs/components/prism-wasm.js'),
-      import('prismjs/components/prism-yaml.js')
+      import('prismjs/components/prism-yaml.js'),
     ])
     return m.Code
-  })
+  }),
 )
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then(
-    (m) => m.Collection
-  )
+    (m) => m.Collection,
+  ),
 )
 const Equation = dynamic(() =>
-  import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation),
 )
 const Pdf = dynamic(
   () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
   {
-    ssr: false
-  }
+    ssr: false,
+  },
 )
 const Modal = dynamic(
   () =>
@@ -79,8 +79,8 @@ const Modal = dynamic(
       return m.Modal
     }),
   {
-    ssr: false
-  }
+    ssr: false,
+  },
 )
 
 const Tweet = ({ id }: { id: string }) => {
@@ -89,11 +89,11 @@ const Tweet = ({ id }: { id: string }) => {
 
 const propertyLastEditedTimeValue = (
   { block, pageHeader },
-  defaultFn: () => React.ReactNode
+  defaultFn: () => React.ReactNode,
 ) => {
   if (pageHeader && block?.last_edited_time) {
     return `Last updated ${formatDate(block?.last_edited_time, {
-      month: 'long'
+      month: 'long',
     })}`
   }
   return defaultFn()
@@ -101,14 +101,14 @@ const propertyLastEditedTimeValue = (
 
 const propertyDateValue = (
   { data, schema, pageHeader },
-  defaultFn: () => React.ReactNode
+  defaultFn: () => React.ReactNode,
 ) => {
   if (pageHeader && schema?.name?.toLowerCase() === 'published') {
     const publishDate = data?.[0]?.[1]?.[0]?.[1]?.start_date
 
     if (publishDate) {
       return `${formatDate(publishDate, {
-        month: 'long'
+        month: 'long',
       })}`
     }
   }
@@ -118,7 +118,7 @@ const propertyDateValue = (
 
 const propertyTextValue = (
   { schema, pageHeader },
-  defaultFn: () => React.ReactNode
+  defaultFn: () => React.ReactNode,
 ) => {
   if (pageHeader && schema?.name?.toLowerCase() === 'author') {
     return <b>{defaultFn()}</b>
@@ -143,17 +143,17 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
       Tweet,
       propertyLastEditedTimeValue,
       propertyTextValue,
-      propertyDateValue
+      propertyDateValue,
     }),
-    []
+    [],
   )
 
   const keys = Object.keys(recordMap?.block || {})
   const block = recordMap?.block?.[keys[0]]?.value
 
-  if (router.isFallback) {
-    return <Loading />
-  }
+  // if (router.refresh || router.push || router.back) {
+  //   return <Loading open={router.push} />
+  // }
 
   if (!config.isServer) {
     // add important objects to the window global for easy debugging
@@ -166,7 +166,7 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   return (
     <>
       <NotionRenderer
-        bodyClassName='index-page'
+        bodyClassName="index-page"
         components={components}
         darkMode={theme === 'dark'}
         recordMap={recordMap}

@@ -7,7 +7,7 @@ import logo from 'static/images/brand/logo.svg'
 
 const brands: Record<string, any> = {
   light,
-  dark
+  dark,
 }
 
 export type BrandProps = {
@@ -23,7 +23,7 @@ export default function Brand({
   size = 80,
   style = {},
   named = true,
-  theme = ''
+  theme = '',
 }: BrandProps) {
   const [system, setSystem] = useState<Theme>('light')
 
@@ -37,7 +37,7 @@ export default function Brand({
 
   return (
     <Image
-      alt='desig-brand'
+      alt="desig-brand"
       src={src}
       width={size}
       style={style}

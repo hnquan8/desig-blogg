@@ -1,4 +1,3 @@
-import BlogCard from '@/components/blogCard'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { Fragment } from 'react'
 
@@ -8,7 +7,10 @@ import { domain } from 'providers/notion/config'
 import { resolveNotionPage } from 'providers/notion/resolve-notion-page'
 import NotionService from 'services/notion.service'
 
-import LoadingBlog from './LoadingBlog'
+import LoadingBlog from './LoaderBlog'
+import SmallCard from 'components/cards/SmallCard'
+
+const ONE_HOUR = 3600
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const notionService = new NotionService()
@@ -44,16 +46,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
         blogPost.tags.some((pageTag) => pageTag.name === tag.name),
       ),
     )
+
     return {
       props: {
         resolve,
         blogPost,
         relatedPosts,
       },
-      revalidate: 3600, // 1 hours ?
+      revalidate: ONE_HOUR,
     }
   } catch (error) {
     console.error('page error', domain, rawBlogId, error)
+
     return {
       props: {
         resolve: null,
@@ -93,7 +97,7 @@ export default function DetailPage({
         <h2 className="font-semibold text-4xl">Related articles</h2>
         <div className="mt-8 mx-auto grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
           {relatedPosts.map((post: BlogPost) => (
-            <BlogCard key={post.id} post={post} size="SMALL" />
+            <SmallCard key={post.id} post={post} />
           ))}
         </div>
       </div>
