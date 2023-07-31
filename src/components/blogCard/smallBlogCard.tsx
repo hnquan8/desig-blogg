@@ -11,7 +11,7 @@ const BlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
   return (
     <div
       onClick={() => router.push(`/${post.slug}`)}
-      className="card w-[330px] h-[440px] bg-base-200 cursor-pointer"
+      className="card w-[330px] h-[460px] bg-base-200 cursor-pointer"
     >
       <figure className="px-5 pt-4">
         <Image
@@ -25,7 +25,7 @@ const BlogCard: FunctionComponent<BlogCardProps> = ({ post }) => {
         />
       </figure>
       <div className="card-body p-5">
-        <h2 className="card-title text-[24px]">{post.title}</h2>
+        <h2 className="card-title text-[22px]">{post.title}</h2>
         <p className="text-[12px] text-neutral-content">{post.description}</p>
         <div className="card-actions">
           {post.tags.map((tag) => (

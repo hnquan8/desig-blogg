@@ -35,7 +35,7 @@ const Blogs = ({ posts }) => {
         </Swiper>
       </div>
       {/* All articles */}
-      <h2 className="mt-20 font-semibold text-4xl">All articles</h2>
+      <h2 className="mt-20 font-semibold text-3xl md:text-4xl">All articles</h2>
       <div className="mt-8 w-full mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
         {posts.map((post: BlogPost) => (
           <SmallCard key={post.id} post={post} />

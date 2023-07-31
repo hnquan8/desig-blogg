@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { Fragment, ReactNode } from 'react'
 
-import Splash from '@/components/splash'
+import Splash from 'components/splash'
 
 export default dynamic(
   () =>
@@ -10,6 +10,6 @@ export default dynamic(
     }),
   {
     ssr: false,
-    loading: () => <Splash open />
-  }
+    loading: () => <Splash open />,
+  },
 )

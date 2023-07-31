@@ -8,16 +8,22 @@ import 'static/styles/global.scss'
 import 'static/styles/notion.scss'
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
+import Head from 'next/head'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <CsrProvider>
-      <UiProvider>
-        <div className="flex flex-col items-center justify-center">
-          <Component {...pageProps} />
-        </div>
-        <Footer />
-      </UiProvider>
-    </CsrProvider>
+    <>
+      <Head>
+        <title>Desig Blog</title>
+      </Head>
+      <CsrProvider>
+        <UiProvider>
+          <div className="flex flex-col items-center justify-center">
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+        </UiProvider>
+      </CsrProvider>
+    </>
   )
 }
