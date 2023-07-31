@@ -1,17 +1,16 @@
 import * as React from 'react'
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-
-import * as config from 'providers/notion/config'
-import * as types from 'providers/notion/types'
-import Loading from 'components/loading/loading'
-import { mapImageUrl } from 'providers/notion/map-image-url'
-import { useTheme } from 'providers/ui.provider'
 
 import { formatDate } from 'notion-utils'
 import { NotionRenderer } from 'react-notion-x'
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+import dynamic from 'next/dynamic'
+import * as config from 'providers/notion/config'
+import * as types from 'providers/notion/types'
+import { mapImageUrl } from 'providers/notion/map-image-url'
+import { useTheme } from 'providers/ui.provider'
 import TweetEmbed from 'react-tweet-embed'
 
 // -----------------------------------------------------------------------------
@@ -128,7 +127,6 @@ const propertyTextValue = (
 }
 
 const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
-  const router = useRouter()
   const { theme } = useTheme()
 
   const components = React.useMemo(
@@ -151,10 +149,6 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   const keys = Object.keys(recordMap?.block || {})
   const block = recordMap?.block?.[keys[0]]?.value
 
-  // if (router.refresh || router.push || router.back) {
-  //   return <Loading open={router.push} />
-  // }
-
   if (!config.isServer) {
     // add important objects to the window global for easy debugging
     const g = window as any
@@ -164,19 +158,17 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   }
 
   return (
-    <>
-      <NotionRenderer
-        bodyClassName="index-page"
-        components={components}
-        darkMode={theme === 'dark'}
-        recordMap={recordMap}
-        previewImages={!!recordMap.preview_images}
-        defaultPageIcon={config.defaultPageIcon}
-        defaultPageCover={config.defaultPageCover}
-        defaultPageCoverPosition={config.defaultPageCoverPosition}
-        mapImageUrl={mapImageUrl}
-      />
-    </>
+    <NotionRenderer
+      bodyClassName="index-page"
+      components={components}
+      darkMode={theme === 'dark'}
+      recordMap={recordMap}
+      previewImages={!!recordMap.preview_images}
+      defaultPageIcon={config.defaultPageIcon}
+      defaultPageCover={config.defaultPageCover}
+      defaultPageCoverPosition={config.defaultPageCoverPosition}
+      mapImageUrl={mapImageUrl}
+    />
   )
 }
 

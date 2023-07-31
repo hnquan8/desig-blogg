@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation'
 
 import Brand from 'components/brand'
+
 import {
   EMAIL,
   GITHUB,
@@ -67,7 +68,7 @@ export default function Footer() {
           <div>Desig © 2023, All Rights Reserved.</div>
         </div>
       </div>
-
+      {/* Link Social */}
       <div className="border-t-[1px] border-t-base-300 w-full flex justify-center">
         <div className="bg-base-300">
           <div className="grid gap-[1px] grid-cols-4 items-center">
@@ -85,7 +86,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
+      {/* Link About */}
       <div className="border-t-[1px] border-t-base-300 w-full flex justify-center">
         <div className="bg-base-300">
           <div className="grid gap-[1px] grid-cols-3 items-center">

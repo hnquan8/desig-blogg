@@ -1,4 +1,3 @@
-'use client'
 import Image from 'next/image'
 
 import cover from 'static/images/cover.svg'

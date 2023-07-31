@@ -18,9 +18,9 @@
     "typeRoots": ["./node_modules/@types"],
     "incremental": true,
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/lib/*": ["providers/notion/*"],
-      "@/styles/*": ["styles/*"]
+      "components/*": ["components/*"],
+      "lib/*": ["providers/notion/*"],
+      "styles/*": ["styles/*"]
     }
   },
   "editor.codeActionsOnSave": {

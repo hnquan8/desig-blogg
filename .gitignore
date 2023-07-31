@@ -6,6 +6,7 @@
 .pnp.js
 /dist
 .github
+.yarn.lock
 # testing
 /coverage
 

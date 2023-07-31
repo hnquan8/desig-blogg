@@ -1,5 +1,7 @@
-import Image from 'next/image'
+'use client'
+
 import { CSSProperties, useEffect, useState } from 'react'
+import Image from 'next/image'
 
 import dark from 'static/images/brand/brand-in-dark.svg'
 import light from 'static/images/brand/brand-in-light.svg'

@@ -10,17 +10,8 @@ export default class NotionService {
   }
 
   async getAllBlogPosts(): Promise<BlogPost[]> {
+    if(!database) throw new Error('databaseId is not found')
     const blogs = await this.client.databases.query({
-      database_id: database
-    })
-
-    return blogs.results.map((blog) => {
-      return NotionService.convertToBlog(blog)
-    })
-  }
-
-  async getNewBlogPosts(): Promise<BlogPost[]> {
-    const newBlogs = await this.client.databases.query({
       database_id: database,
       sorts: [
         {
@@ -30,21 +21,22 @@ export default class NotionService {
       ]
     })
 
-    return newBlogs.results.map((blog) => {
-      return NotionService.convertToBlog(blog)
-    })
+    if(!blogs.results) throw new Error('Notion blogs is not found')
+
+    return blogs.results.map((blog) => NotionService.convertToBlog(blog))
   }
 
   async getBlogDetails(pageId: string): Promise<BlogPost> {
+    if(!pageId) throw new Error('pageId is not found')
     const blogDetails = await this.client.pages.retrieve({ page_id: pageId })
-    if (!blogDetails) {
-      return null
-    }
+   
+    if(!blogDetails) throw new Error('Notion blog details is not found')
 
     return NotionService.convertToBlog(blogDetails)
   }
 
   private static convertToBlog(blog: any): BlogPost {
+    if(!blog.url) throw new Error('blog url is not found')
     const path = blog.url
     const slug = path ? path.split('/').slice(-1)[0] : ''
 

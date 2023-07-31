@@ -1,8 +1,8 @@
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Brand from 'components/brand'
-import { useDebounce } from 'react-use'
 
+import { useDebounce } from 'react-use'
 import styles from './index.module.scss'
 
 export type RippleProps = { style?: CSSProperties }
@@ -26,7 +26,7 @@ export default function Splash({ open }: SplashProps) {
     () => {
       if (!open) setDisplay('none')
     },
-    300,
+    500,
     [open],
   )
 
