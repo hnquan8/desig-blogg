@@ -13,6 +13,7 @@ export async function resolveNotionPage(rawPageId?: string) {
     pageId = parsePageId(override)
   }
   const recordMap: ExtendedRecordMap = await getPage(pageId)
+
   return { recordMap, pageId }
 }
 

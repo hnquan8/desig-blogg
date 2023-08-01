@@ -5,8 +5,10 @@ import { NotionRenderer } from 'react-notion-x'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import Loading from 'components/loading'
 
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import * as config from 'providers/notion/config'
 import * as types from 'providers/notion/types'
 import { mapImageUrl } from 'providers/notion/map-image-url'
@@ -126,8 +128,9 @@ const propertyTextValue = (
   return defaultFn()
 }
 
-const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
+const LoaderBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   const { theme } = useTheme()
+  const router = useRouter()
 
   const components = React.useMemo(
     () => ({
@@ -148,6 +151,10 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
 
   const keys = Object.keys(recordMap?.block || {})
   const block = recordMap?.block?.[keys[0]]?.value
+
+  if (router.isFallback) {
+    return <Loading />
+  }
 
   if (!config.isServer) {
     // add important objects to the window global for easy debugging
@@ -172,4 +179,4 @@ const LoadingBlog: React.FC<types.PageProps> = ({ recordMap, pageId }) => {
   )
 }
 
-export default LoadingBlog
+export default LoaderBlog
