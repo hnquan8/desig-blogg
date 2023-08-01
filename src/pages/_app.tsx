@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import type { AppProps } from 'next/app'
 
 import Footer from 'components/footer'
@@ -8,7 +9,6 @@ import 'static/styles/global.scss'
 import 'static/styles/notion.scss'
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
-import Head from 'next/head'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

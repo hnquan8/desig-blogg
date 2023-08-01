@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { formatDate } from 'notion-utils'
 import { NotionRenderer } from 'react-notion-x'
 

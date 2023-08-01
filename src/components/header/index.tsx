@@ -1,7 +1,6 @@
-import { useRouter } from 'next/navigation'
-
 import Brand from 'components/brand'
 
+import { useRouter } from 'next/navigation'
 import { EMAIL } from 'configs/socials.constant'
 import { useTheme } from 'providers/ui.provider'
 

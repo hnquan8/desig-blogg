@@ -1,7 +1,8 @@
-import dynamic from 'next/dynamic'
 import { Fragment, ReactNode } from 'react'
 
 import Splash from 'components/splash'
+
+import dynamic from 'next/dynamic'
 
 export default dynamic(
   () =>

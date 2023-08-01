@@ -1,6 +1,6 @@
 import { Fragment, ReactNode, useEffect } from 'react'
-
 import { create } from 'zustand'
+
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 const autoTheme = (): Theme => {
@@ -27,14 +27,14 @@ export const useUiStore = create<UiStore>()(
     persist(
       (set) => ({
         theme: 'light',
-        setTheme: (theme: Theme) => set({ theme }, false, 'setTheme')
+        setTheme: (theme: Theme) => set({ theme }, false, 'setTheme'),
       }),
       {
         name: 'theme',
-        storage: createJSONStorage(() => sessionStorage)
-      }
-    )
-  )
+        storage: createJSONStorage(() => sessionStorage),
+      },
+    ),
+  ),
 )
 
 /**
@@ -44,7 +44,7 @@ export const useUiStore = create<UiStore>()(
 export const useTheme = () => {
   return useUiStore(({ theme, setTheme }) => ({
     theme: theme || autoTheme(),
-    setTheme
+    setTheme,
   }))
 }
 
